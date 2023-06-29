@@ -1,27 +1,18 @@
-pipeline{
-    environment{
-        dockerimagename = "localhost:5000/storybook-showcase"
-        dockerImage = ""
-    }
-    agent any
+node{
+    def dockerImage
 
     stages {
         stage("Checkout SCM"){
-            steps{
-                checkout scm
-            }
+            git "https://github.com/Testareaa/storybook.git"
         }
         stage("Build Image"){
-            steps{
-                script{
-                    dockerImage = docker.build dockerimagename                    
-                }
-            }
+            dockerImage = docker.build("localhost:5000/storybook-showcase")                    
         }
         stage("Pushing Image"){
             steps{
                 script{
                     docker.withRegistry("http://localhost:5000"){
+                        dockerImage.push("${env.BUILD_NUMBER}")
                         dockerImage.push("latest")
                     }
                 }
