@@ -19,9 +19,11 @@ pipeline{
             }
         }
         stage("Pushing Image"){
-            script{
-                docker.withRegistry("http://localhost:5000"){
-                    dockerImage.push("latest")
+            steps{
+                script{
+                    docker.withRegistry("http://localhost:5000"){
+                        dockerImage.push("latest")
+                    }
                 }
             }
         }
