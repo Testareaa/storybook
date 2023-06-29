@@ -2,7 +2,7 @@ node{
     def dockerImage
 
         stage("Checkout SCM"){
-            git "https://github.com/Testareaa/storybook.git"
+            checkout scm
         }
         stage("Build Image"){
             dockerImage = docker.build("localhost:5000/storybook-showcase")                    
