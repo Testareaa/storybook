@@ -13,12 +13,16 @@ pipeline{
         }
         stage("Build Image"){
             steps{
-                dockerImage = docker.build dockerimagename
+                script{
+                    dockerImage = docker.build dockerimagename                    
+                }
             }
         }
         stage("Pushing Image"){
-            docker.withRegistry("http://localhost:5000"){
-                dockerImage.push("latest")
+            script{
+                docker.withRegistry("http://localhost:5000"){
+                    dockerImage.push("latest")
+                }
             }
         }
     }
