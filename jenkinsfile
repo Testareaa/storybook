@@ -1,0 +1,25 @@
+pipeline{
+    environment{
+        dockerimagename = "localhost:5000/storybook-showcase"
+        dockerImage = ""
+    }
+    agent any
+
+    stages {
+        stage("Checkout SCM"){
+            steps{
+                git "https://github.com/Testareaa/storybook.git"
+            }
+        }
+        stage("Build Image"){
+            steps{
+                dockerImage = docker.build dockerimagename
+            }
+        }
+        stage("Pushing Image"){
+            docker.withRegistry("http://localhost:5000"){
+                dockerImage.push("latest")
+            }
+        }
+    }
+}

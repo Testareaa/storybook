@@ -1,0 +1,14 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - 80:80
+  jenkins:
+    image: "jenkins/jenkins:latest"
+    ports:
+      - 8080:8080
+      - 50000:50000
+  registry:
+    image: "registry:latest"
+    ports:
+      - 5000:5000
